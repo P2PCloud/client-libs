@@ -1,0 +1,142 @@
+# Edit at https://editor.swagger.io/
+---
+swagger: "2.0"
+info:
+  description: From the todo list tutorial on goswagger.io
+  title: A Todo list application
+  version: 1.0.0
+consumes:
+- application/io.goswagger.examples.todo-list.v1+json
+produces:
+- application/io.goswagger.examples.todo-list.v1+json
+schemes:
+- http
+paths:
+  /vms/:
+    get:
+      tags:
+        - User api
+      operationId: list_vms
+      responses:
+        200:
+          description: list all booked vms
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/vm"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/error"
+    post:
+      tags:
+        - User api
+      operationId: book_vm
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/vm"
+      responses:
+        201:
+          description: Booked
+          schema:
+            $ref: "#/definitions/vm"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /vm/{id}:
+    parameters:
+      - type: integer
+        format: int64
+        name: id
+        in: path
+        required: true
+    get:
+      tags:
+        - User api
+      operationId: vm_get
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/vm"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/vm"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /vm/{id}/start:
+    parameters:
+      - type: integer
+        format: int64
+        name: id
+        in: path
+        required: true
+    post:
+      tags:
+        - User api
+      operationId: vm_start
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/vm"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/vm"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+definitions:
+  vm:
+    type: object
+    required:
+      - index
+      - vm_type_id
+      - pps
+      - miner
+      - user
+      - booked_till
+    properties:
+      index:
+        type: integer
+        format: int64
+        x-isnullable: false
+      vm_type_id:
+        type: integer
+        format: int64
+        x-isnullable: false
+      pps:
+        type: integer
+        format: int64
+        x-isnullable: false
+      miner:
+        type: string
+        x-isnullable: false
+      user:
+        type: string
+        x-isnullable: false
+      booked_till:
+        type: integer
+        format: int64
+        x-isnullable: false
+  error:
+    type: object
+    required:
+      - message
+    properties:
+      code:
+        type: integer
+        format: int64
+      message:
+        type: string
+        x-isnullable: false
