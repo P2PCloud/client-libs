@@ -32,10 +32,6 @@ type ClientService interface {
 
 	ListVms(params *ListVmsParams, opts ...ClientOption) (*ListVmsOK, error)
 
-	VMGet(params *VMGetParams, opts ...ClientOption) (*VMGetOK, error)
-
-	VMStart(params *VMStartParams, opts ...ClientOption) (*VMStartOK, error)
-
 	SetTransport(transport runtime.ClientTransport)
 }
 
@@ -51,8 +47,8 @@ func (a *Client) BookVM(params *BookVMParams, opts ...ClientOption) (*BookVMCrea
 		ID:                 "book_vm",
 		Method:             "POST",
 		PathPattern:        "/vms/",
-		ProducesMediaTypes: []string{"application/io.goswagger.examples.todo-list.v1+json"},
-		ConsumesMediaTypes: []string{"application/io.goswagger.examples.todo-list.v1+json"},
+		ProducesMediaTypes: []string{"application/io.p2pcloud.service-api.v1+json"},
+		ConsumesMediaTypes: []string{"application/io.p2pcloud.service-api.v1+json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &BookVMReader{formats: a.formats},
@@ -88,8 +84,8 @@ func (a *Client) ListVms(params *ListVmsParams, opts ...ClientOption) (*ListVmsO
 		ID:                 "list_vms",
 		Method:             "GET",
 		PathPattern:        "/vms/",
-		ProducesMediaTypes: []string{"application/io.goswagger.examples.todo-list.v1+json"},
-		ConsumesMediaTypes: []string{"application/io.goswagger.examples.todo-list.v1+json"},
+		ProducesMediaTypes: []string{"application/io.p2pcloud.service-api.v1+json"},
+		ConsumesMediaTypes: []string{"application/io.p2pcloud.service-api.v1+json"},
 		Schemes:            []string{"http"},
 		Params:             params,
 		Reader:             &ListVmsReader{formats: a.formats},
@@ -110,80 +106,6 @@ func (a *Client) ListVms(params *ListVmsParams, opts ...ClientOption) (*ListVmsO
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ListVmsDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  VMGet vm get API
-*/
-func (a *Client) VMGet(params *VMGetParams, opts ...ClientOption) (*VMGetOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewVMGetParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "vm_get",
-		Method:             "GET",
-		PathPattern:        "/vm/{id}",
-		ProducesMediaTypes: []string{"application/io.goswagger.examples.todo-list.v1+json"},
-		ConsumesMediaTypes: []string{"application/io.goswagger.examples.todo-list.v1+json"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &VMGetReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*VMGetOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*VMGetDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  VMStart vm start API
-*/
-func (a *Client) VMStart(params *VMStartParams, opts ...ClientOption) (*VMStartOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewVMStartParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "vm_start",
-		Method:             "POST",
-		PathPattern:        "/vm/{id}/start",
-		ProducesMediaTypes: []string{"application/io.goswagger.examples.todo-list.v1+json"},
-		ConsumesMediaTypes: []string{"application/io.goswagger.examples.todo-list.v1+json"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &VMStartReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*VMStartOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*VMStartDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

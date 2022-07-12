@@ -51,7 +51,7 @@ func NewBookVMCreated() *BookVMCreated {
 Booked
 */
 type BookVMCreated struct {
-	Payload *models.VM
+	Payload *models.Success
 }
 
 // IsSuccess returns true when this book Vm created response has a 2xx status code
@@ -87,13 +87,13 @@ func (o *BookVMCreated) String() string {
 	return fmt.Sprintf("[POST /vms/][%d] bookVmCreated  %+v", 201, o.Payload)
 }
 
-func (o *BookVMCreated) GetPayload() *models.VM {
+func (o *BookVMCreated) GetPayload() *models.Success {
 	return o.Payload
 }
 
 func (o *BookVMCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.VM)
+	o.Payload = new(models.Success)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

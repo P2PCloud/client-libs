@@ -14,8 +14,6 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-
-	"github.com/p2pcloud/client-libs/golang/models"
 )
 
 // NewBookVMParams creates a new BookVMParams object,
@@ -61,8 +59,11 @@ func NewBookVMParamsWithHTTPClient(client *http.Client) *BookVMParams {
 */
 type BookVMParams struct {
 
-	// Body.
-	Body *models.VM
+	/* OfferIndex.
+
+	   Miner's offer ID
+	*/
+	OfferIndex int64
 
 	timeout    time.Duration
 	Context    context.Context
@@ -117,15 +118,15 @@ func (o *BookVMParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithBody adds the body to the book vm params
-func (o *BookVMParams) WithBody(body *models.VM) *BookVMParams {
-	o.SetBody(body)
+// WithOfferIndex adds the offerIndex to the book vm params
+func (o *BookVMParams) WithOfferIndex(offerIndex int64) *BookVMParams {
+	o.SetOfferIndex(offerIndex)
 	return o
 }
 
-// SetBody adds the body to the book vm params
-func (o *BookVMParams) SetBody(body *models.VM) {
-	o.Body = body
+// SetOfferIndex adds the offerIndex to the book vm params
+func (o *BookVMParams) SetOfferIndex(offerIndex int64) {
+	o.OfferIndex = offerIndex
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -135,10 +136,8 @@ func (o *BookVMParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 		return err
 	}
 	var res []error
-	if o.Body != nil {
-		if err := r.SetBodyParam(o.Body); err != nil {
-			return err
-		}
+	if err := r.SetBodyParam(o.OfferIndex); err != nil {
+		return err
 	}
 
 	if len(res) > 0 {
