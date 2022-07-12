@@ -32,8 +32,6 @@ paths:
       tags:
         - User api
       operationId: book_vm
-      consumes:
-        - application/json
       parameters:
         - in: body
           name: booking_params
