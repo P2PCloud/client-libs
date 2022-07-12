@@ -34,7 +34,7 @@ paths:
       operationId: book_vm
       parameters:
         - in: body
-          name: offer_index
+          name: body
           schema:
             type: object
             required:
