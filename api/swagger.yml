@@ -36,9 +36,19 @@ paths:
         - in: body
           name: offer_index
           schema:
-            type: integer
-          required: true
-          description: Miner's offer ID
+            type: object
+            required:
+              - offer_index
+              - seconds
+            properties:
+              offer_index:
+                type: integer
+                format: int64
+                x-isnullable: false
+              seconds:
+                type: integer
+                format: int64
+                x-isnullable: false
       responses:
         201:
           description: Booked
