@@ -11,6 +11,7 @@ produces:
 - application/io.p2pcloud.service-api.v1+json
 schemes:
 - http
+host: localhost:9069
 paths:
   /vms/:
     get:
@@ -44,7 +45,8 @@ paths:
               offer_index:
                 type: integer
                 format: int64
-                x-isnullable: false
+                x-isnullable: true
+                default: 0
               seconds:
                 type: integer
                 format: int64
