@@ -85,31 +85,35 @@ paths:
   #         description: error
   #         schema:
   #           $ref: "#/definitions/error"
-  # /vm/{id}/start:
-  #   parameters:
-  #     - type: integer
-  #       format: int64
-  #       name: id
-  #       in: path
-  #       required: true
-  #   post:
-  #     tags:
-  #       - User api
-  #     operationId: vm_start
-  #     parameters:
-  #       - name: body
-  #         in: body
-  #         schema:
-  #           $ref: "#/definitions/vm"
-  #     responses:
-  #       200:
-  #         description: OK
-  #         schema:
-  #           $ref: "#/definitions/vm"
-  #       default:
-  #         description: error
-  #         schema:
-  #           $ref: "#/definitions/error"
+  /vm/{id}/start:
+    parameters:
+      - type: integer
+        format: int64
+        name: id
+        in: path
+        required: true
+    post:
+      consumes:
+         - multipart/form-data
+      tags:
+        - User api
+      operationId: vm_start
+      description: Starts a VM. Takes 40-70 seconds
+      parameters:
+        - in: formData
+          name: up_files
+          type: file
+          required: true
+          description: Additional files to add to filesystem. startup.sh is recommended
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/success"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
 definitions:
   vm:
     type: object
