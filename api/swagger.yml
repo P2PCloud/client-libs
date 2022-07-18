@@ -2,9 +2,9 @@
 ---
 swagger: "2.0"
 info:
-  description: From the todo list tutorial on goswagger.io
-  title: A Todo list application
-  version: 0.0.1
+  description: API to book and manage booked VMs on P2P Cloud hosting.
+  title: P2PCloud service client API
+  version: 0.0.2
 consumes:
 - application/io.p2pcloud.service-api.v1+json
 produces:
@@ -60,31 +60,6 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
-  # /vm/{id}:
-  #   parameters:
-  #     - type: integer
-  #       format: int64
-  #       name: id
-  #       in: path
-  #       required: true
-  #   get:
-  #     tags:
-  #       - User api
-  #     operationId: vm_get
-  #     parameters:
-  #       - name: body
-  #         in: body
-  #         schema:
-  #           $ref: "#/definitions/vm"
-  #     responses:
-  #       200:
-  #         description: OK
-  #         schema:
-  #           $ref: "#/definitions/vm"
-  #       default:
-  #         description: error
-  #         schema:
-  #           $ref: "#/definitions/error"
   /vm/{id}/start:
     parameters:
       - type: integer
@@ -114,7 +89,34 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+  /offers/:
+    get:
+      tags:
+        - User api
+      operationId: list_offers
+      responses:
+        200:
+          description: list all avalable offers
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/offer"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/error"
 definitions:
+  offer:
+    type: object
+    properties:
+      index:
+        type: integer
+        format: int64
+        x-isnullable: false
+      availability:
+        type: integer
+        format: int64
+        x-isnullable: false
   vm:
     type: object
     required:
