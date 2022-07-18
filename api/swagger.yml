@@ -94,6 +94,14 @@ paths:
       tags:
         - User api
       operationId: list_offers
+      parameters:
+        - in: query
+          name: vm_type_id
+          type: integer
+          format: int64
+          x-nullable: false
+          required: true
+          description: VM type ID to filter offers
       responses:
         200:
           description: list all avalable offers
